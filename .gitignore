@@ -1,0 +1,19 @@
+node_modules/
+npm-debug.log
+[Bb]uild_raw/
+[Dd]ist/
+/[Tt]emp/
+*.asar
+*.log
+
+# phpstorm project files
+.idea
+
+# netbeans project files
+nbproject
+
+# windows thumbnail cache
+Thumbs.db
+
+# Mac DS_Store Files
+.DS_Store

@@ -1,0 +1,32 @@
+body
+{
+    background-color: #CCDDFF;
+    font-family: lucida grande, tahoma, verdana, arial, sans-serif;
+    color: #151515; 
+}
+
+div
+{
+    padding: 5px;	
+    margin: 5px;
+}
+
+#title{
+    font-size: 24px;
+}
+
+#subtitle{
+    background-color: #555;
+    font-size: 20px;
+    color: #EFEFEF;
+    border-radius: 4px;
+}
+
+#logoutput{
+    background-color: #FEFEFE;
+    line-height: 24px;
+    font-size: 16px;
+    text-align: left;
+    font-family: monospace;
+    word-wrap: break-word;
+}
