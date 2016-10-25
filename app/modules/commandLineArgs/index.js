@@ -9,18 +9,17 @@ const self = {};
 self.cache = cache;
 
 
-self.init = (processArgs) => {
+self.init = () => {
   // The first argument is always the electron startup path
-  finalArgs = parser.removeArgByIndex(processArgs, 0);
+  finalArgs = parser.removeArgByIndex(process.argv, 0);
 
   // Attempt to find the argument string from the protocol shortcut
-  const pArgIndex = parser.findProtolArgIndex(processArgs);
+  const pArgIndex = parser.findProtolArgIndex(finalArgs);
   let protocolArgs = [];
-
   // Add args from prototcol string if any were found
   if (pArgIndex >= 0) {
+    protocolArgs = parser.parseArgString(finalArgs[pArgIndex]);
     finalArgs = parser.removeArgByIndex(finalArgs, pArgIndex);
-    protocolArgs = parser.parseArgString(processArgs[pArgIndex]);
 
     finalArgs = parser.mergeArgSets(finalArgs, protocolArgs);
   }
@@ -46,7 +45,7 @@ self.getArgument = (name) => {
 self.getArgumentValue = (name) => {
   const arg = self.getArgument(name);
 
-  return parser.extractValue(arg);
+  return parser.extractValue(name, arg);
 };
 
 

@@ -2,9 +2,7 @@
 * MOCK MODULE
 -----------------------------------*/
 
-'use strict';
-
-var self = {};
+const self = {};
 
 self.statError = null;
 self.statData = '';

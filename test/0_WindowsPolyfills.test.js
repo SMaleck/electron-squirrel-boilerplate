@@ -1,15 +1,13 @@
-'use strict';
-
 // -----------------------------------------------------------+
-describe('Windows Compatibility Polyfills', function () {
+describe('Windows Compatibility Polyfills', () => {
   // -----------------------------------------------------------+
-  it('Add process.env', function () {
-    process = process || {};
-    process.env = process.env || {};
-    process.argv = process.argv || [];
+  it('Add Log to globals', () => {
+    global.Log = (message) => {
+      //console.log(message);
+    };
   });
 
-  it('Add string.startsWith()', function () {
+  it('Add string.startsWith()', () => {
     if (!String.prototype.startsWith) {
       String.prototype.startsWith = function (searchString, position) {
         position = position || 0;
@@ -18,15 +16,15 @@ describe('Windows Compatibility Polyfills', function () {
     }
   });
 
-  it('Add string.endsWith()', function () {
+  it('Add string.endsWith()', () => {
     if (!String.prototype.endsWith) {
       String.prototype.endsWith = function (searchString, position) {
-        var subjectString = this.toString();
+        const subjectString = this.toString();
         if (typeof position !== 'number' || !isFinite(position) || Math.floor(position) !== position || position > subjectString.length) {
           position = subjectString.length;
         }
         position -= searchString.length;
-        var lastIndex = subjectString.indexOf(searchString, position);
+        const lastIndex = subjectString.indexOf(searchString, position);
         return lastIndex !== -1 && lastIndex === position;
       };
     }

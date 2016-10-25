@@ -1,10 +1,7 @@
 /*-----------------------------------
 * MOCK MODULE
 -----------------------------------*/
-
-'use strict';
-
-var self = {};
+const self = {};
 
 self.getArguments = function getArguments() {
   return process.argv;

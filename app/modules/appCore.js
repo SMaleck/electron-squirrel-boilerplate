@@ -19,8 +19,8 @@ const self = {};
 self.init = function () {
   startUpLog();
 
-  const args = clArgs.cache.restoreCache();
-  clArgs.init(args);
+  process.argv = clArgs.cache.restoreCache();
+  clArgs.init();
 
   config.apply();
 };

@@ -21,7 +21,7 @@ self.findProtolArgIndex = (processArgs) => {
 
 
 self.parseArgString = (argString) => {
-  if (!argString || argString !== '') { return []; }
+  if (!argString || argString === '') { return []; }
 
   const indices = getArgIndices(argString);
   const parsedArgs = extractArgsFromString(argString, indices.starts, indices.ends);

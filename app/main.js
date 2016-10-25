@@ -1,5 +1,3 @@
-'use strict';
-
 // Main Application Modules
 var electron = require('electron');
 var appCore = require('./modules/appCore');

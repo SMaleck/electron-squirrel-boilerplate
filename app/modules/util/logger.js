@@ -14,13 +14,8 @@ const self = {};
 self.log = function (message) {
   const logMessage = `[${new Date().toISOString()}] ${message}`;
 
-  // EXIT in SILENT mode
-  if (process.env.SILENT) { return; }
   // eslint-disable-next-line no-console
   console.log(logMessage);
-
-  // EXIT in UNITTEST mode
-  if (process.env.UNITTEST) { return; }
   logCache.push(logMessage);
 
   if (logConsole) {

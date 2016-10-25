@@ -2,12 +2,10 @@
 * MOCK MODULE
 -----------------------------------*/
 
-'use strict';
-
-var self = {};
+const self = {};
 
 self.run = function run() {
-  return new Promise(function (resolve, reject) {
+  return new Promise((resolve, reject) => {
     self.resolve = resolve;
     self.reject = reject;
   });

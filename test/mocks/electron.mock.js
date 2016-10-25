@@ -2,9 +2,7 @@
 * MOCK MODULE
 -----------------------------------*/
 
-'use strict';
-
-var electron = {};
+const electron = {};
 
 // App Mock
 electron.app = {
@@ -19,11 +17,11 @@ electron.app = {
     return this.appPath;
   },
 
-  getVersion: function () { },
+  getVersion: () => { },
 
-  isDefaultProtocolClient: function () { },
+  isDefaultProtocolClient: () => { },
 
-  setAsDefaultProtocolClient: function () { },
+  setAsDefaultProtocolClient: () => { },
 
   quit: function quit() { }
 };
@@ -37,6 +35,7 @@ electron.ipcMain = {
 
 // Auto Updater mock
 electron.autoUpdater = {
+  elecAU: this,
   didQuitAndInstall: false,
   feedURL: '',
   listeners: {},

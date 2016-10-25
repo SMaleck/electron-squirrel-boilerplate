@@ -1,23 +1,21 @@
-'use strict';
-
-var mockery = require('mockery');
+const mockery = require('mockery');
 
 module.exports = {
 
-  start: function () {
+  start: () => {
     mockery.enable({ useCleanCache: true });
     mockery.warnOnUnregistered(false);
   },
 
 
-  shutdown: function () {
+  shutdown: () => {
     mockery.deregisterAll();
     mockery.disable();
     process.env = {};
   },
 
 
-  resolve: function (moduleName) {
+  resolve: (moduleName) => {
     return './mocks/' + moduleName + '.mock';
   }
 };

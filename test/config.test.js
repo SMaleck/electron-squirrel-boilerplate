@@ -1,24 +1,22 @@
-'use strict';
+const mockHelper = require('./mocks/mockHelper');
+const mockery = require('mockery');
+const assert = require('assert');
 
-var mockHelper = require('./mocks/mockHelper');
-var mockery = require('mockery');
-var assert = require('assert');
+let config;
 
-var config;
-
-var argResolver;
-var mockElectron;
-var path = require('path');
+let clArg;
+let mockElectron;
+const path = require('path');
 
 // Mocked Data
-var coreArgs = [];
-var rootDir = 'root' + path.sep + 'dir';
+let coreArgs = [];
+const rootDir = `root${path.sep}dir`;
 
 // -----------------------------------------------------------+
-describe('CONFIG MODULE', function () {
+describe('CONFIG MODULE', () => {
   // -----------------------------------------------------------+
 
-  beforeEach(function () {
+  beforeEach(() => {
     mockHelper.start();
     mockery.registerSubstitute('electron', '../../../test/mocks/electron.mock');
 
@@ -28,21 +26,21 @@ describe('CONFIG MODULE', function () {
     coreArgs = [
       '',
       config.ARG.DEBUG,
-      config.UPDATEURL + '=www.google.com'
+      `${config.UPDATEURL}=www.google.com`
     ];
 
-    argResolver = require('../app/modules/utilities/argResolver');
+    clArg = require('../app/modules/commandLineArgs');
     mockElectron = require('./mocks/electron.mock');
   });
 
-  afterEach(function () {
+  afterEach(() => {
     mockHelper.shutdown();
   });
 
 
-  it('applies VALID config correctly', function () {
+  it('applies VALID config correctly', () => {
     process.argv = coreArgs;
-    argResolver.init();
+    clArg.init();
     mockElectron.app.exePath = '/path/to/executable.exe';
 
     config.apply();
@@ -52,9 +50,9 @@ describe('CONFIG MODULE', function () {
   });
 
 
-  it('Sets config.ROOTDIR to __DIRNAME if on DEV environment', function () {
+  it('Sets config.ROOTDIR to __DIRNAME if on DEV environment', () => {
     process.argv = coreArgs;
-    argResolver.init();
+    clArg.init();
     mockElectron.app.exePath = 'path/electron-prebuilt/executable.exe';
 
     config.apply();

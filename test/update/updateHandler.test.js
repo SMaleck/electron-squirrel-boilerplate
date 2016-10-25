@@ -1,21 +1,19 @@
-'use strict';
+const mockHelper = require('../mocks/mockHelper');
+const mockery = require('mockery');
+const assert = require('assert');
 
-var mockHelper = require('../mocks/mockHelper');
-var mockery = require('mockery');
-var assert = require('assert');
+let config;
+let mockAutoUpdater;
 
-var config;
-var mockAutoUpdater;
+let updateHandler;
 
-var updateHandler;
-
-var originalPlatform;
+const originalPlatform = process.platform;
 
 // -----------------------------------------------------------+
-describe('UPDATE HANDLER:', function () {
+describe('UPDATE HANDLER:', () => {
   // -----------------------------------------------------------+
 
-  before(function () {
+  before(() => {
     mockHelper.start();
 
     mockery.registerSubstitute('electron', '../../../test/mocks/electron.mock');
@@ -27,24 +25,23 @@ describe('UPDATE HANDLER:', function () {
     updateHandler = require('../../app/modules/update/updateHandler');
 
     // redefine process.platform
-    originalPlatform = process.platform;
     Object.defineProperty(process, 'platform', {
       value: 'win32'
     });
   });
 
-  beforeEach(function () {
+  beforeEach(() => {
     mockAutoUpdater.didQuitAndInstall = false;
   });
 
-  after(function () {
+  after(() => {
     mockHelper.shutdown();
     Object.defineProperty(process, 'platform', {
       value: originalPlatform
     });
   });
 
-  it('Added all Listeners on Require', function () {
+  it('Added all Listeners on Require', () => {
     assert(mockAutoUpdater.listeners.hasOwnProperty('checking_for_update'));
     assert(mockAutoUpdater.listeners.hasOwnProperty('update_available'));
     assert(mockAutoUpdater.listeners.hasOwnProperty('update_not_available'));
@@ -53,116 +50,116 @@ describe('UPDATE HANDLER:', function () {
   });
 
 
-  it('Does nothing on CHECKING FOR UPDATE', function () {
-    var check = 0;
-    setTimeout(function () {
+  it('Does nothing on CHECKING FOR UPDATE', () => {
+    let check = 0;
+    setTimeout(() => {
       check = 1;
       mockAutoUpdater.listeners.checking_for_update();
-      setTimeout(function () {
+      setTimeout(() => {
         check = 2;
         mockAutoUpdater.listeners.update_not_available();
       }, 5);
     }, 5);
 
     return updateHandler()
-      .then(function () {
+      .then(() => {
         assert.equal(check, 2);
       })
-      .catch(function () {
+      .catch(() => {
         assert(false);
       });
   });
 
 
-  it('Does nothing on UPDATE AVAILABLE', function () {
-    var check = 0;
-    setTimeout(function () {
+  it('Does nothing on UPDATE AVAILABLE', () => {
+    let check = 0;
+    setTimeout(() => {
       check = 1;
       mockAutoUpdater.listeners.update_available();
-      setTimeout(function () {
+      setTimeout(() => {
         check = 2;
         mockAutoUpdater.listeners.update_not_available();
       }, 5);
     }, 5);
 
     return updateHandler()
-      .then(function () {
+      .then(() => {
         assert.equal(check, 2);
       })
-      .catch(function () {
+      .catch(() => {
         assert(false);
       });
   });
 
-  it('Resolves on UPDATE NOT AVAILABLE', function () {
-    setTimeout(function () {
+  it('Resolves on UPDATE NOT AVAILABLE', () => {
+    setTimeout(() => {
       mockAutoUpdater.listeners.update_not_available();
     }, 5);
 
     return updateHandler()
-      .then(function () {
+      .then(() => {
         assert(mockAutoUpdater.didQuitAndInstall === false);
       })
-      .catch(function () {
+      .catch(() => {
         assert(false);
       });
   });
 
 
-  it('Rejects on UPDATE DOWNLOADED', function () {
-    setTimeout(function () {
+  it('Rejects on UPDATE DOWNLOADED', () => {
+    setTimeout(() => {
       mockAutoUpdater.listeners.update_downloaded();
     }, 5);
 
     return updateHandler()
-      .then(function () {
-        assert(false);
+      .then(() => {
+        assert(false, 'Should not continue');
       })
-      .catch(function () {
+      .catch(() => {
         assert(mockAutoUpdater.didQuitAndInstall);
       });
   });
 
 
-  it('Resolves on ERROR', function () {
-    setTimeout(function () {
+  it('Resolves on ERROR', () => {
+    setTimeout(() => {
       mockAutoUpdater.listeners.error({ message: 'nothing' });
     }, 5);
 
     return updateHandler()
-      .then(function () {
+      .then(() => {
         assert(mockAutoUpdater.didQuitAndInstall === false);
       })
-      .catch(function () {
+      .catch(() => {
         assert(false);
       });
   });
 
 
-  it('Resolves on DEV Environment', function () {
+  it('Resolves on DEV Environment', () => {
     config.DEV = true;
 
     return updateHandler()
-      .then(function () {
+      .then(() => {
         assert(mockAutoUpdater.didQuitAndInstall === false);
       })
-      .catch(function () {
+      .catch(() => {
         assert(false);
       });
   });
 
 
-  it('Resolves on OSX Platform', function () {
+  it('Resolves on OSX Platform', () => {
     config.DEV = false;
     Object.defineProperty(process, 'platform', {
       value: 'darwin'
     });
 
     return updateHandler()
-      .then(function () {
+      .then(() => {
         assert(mockAutoUpdater.didQuitAndInstall === false);
       })
-      .catch(function () {
+      .catch(() => {
         assert(false);
       });
   });

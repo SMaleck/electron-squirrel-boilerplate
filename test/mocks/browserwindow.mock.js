@@ -5,12 +5,10 @@
 * > Mocks the electron browserwindow module
 * > Fakes Events and current URL
 *--------------------------------------------------------------*/
+const self = {};
+self.thisIsAMock = true;
 
-'use strict';
-
-var self = {};
-
-var webContents = {};
+const webContents = {};
 webContents.currentURL = '';
 
 // Get the URL

@@ -1,12 +1,9 @@
 /*-----------------------------------
 * MOCK MODULE
 -----------------------------------*/
+const self = {};
 
-'use strict';
-
-var self = {};
-
-var process = {
+const process = {
   unref: function () { },
   on: function () { }
 };

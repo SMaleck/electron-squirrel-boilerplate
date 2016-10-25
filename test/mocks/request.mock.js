@@ -2,8 +2,6 @@
 * MOCK MODULE
 -----------------------------------*/
 
-'use strict';
-
 var error = '';
 var response = { status: 200 };
 var body = '';
